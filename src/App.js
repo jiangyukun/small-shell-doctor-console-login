@@ -27,9 +27,9 @@ class App extends Component {
   componentDidUpdate() {
     if (this.props.app.loginSuccess) {
       if (location.href.indexOf('inline') == -1) {
-        location.href = context + 'platform/index'
+        location.href = context + '/inline/doctor-backend'
       } else {
-        location.href = context + 'platform/inline/index'
+        location.href = context + '/doctor-backend'
       }
       return
     }

@@ -5,26 +5,26 @@ process.env.NODE_ENV = 'production'
 module.exports = [
   {
     entry: [
-      './src/js/main/index.js'
+      './src/index.js'
     ],
 
     output: {
-      path: 'build',
+      path: __dirname + '/build/',
       filename: 'bundle-' + moment().format('MMDD') + '.min.js',
       publicPath: 'build/'
     },
 
     module: {
       loaders: [
-        {test: /\.js$/, loaders: ['babel'], exclude: /node_modules/, include: __dirname},
-        {test: /\.scss$/, loader: 'style!css!autoprefixer!sass'},
-        {test: /\.(jpg|png)$/, loader: "url?limit=8192"},
-        {test: /\.svg$/, loader: "file"}
+        {test: /\.js$/, loaders: ['react-hot-loader', 'babel-loader?cacheDirectory'], exclude: /node_modules/, include: __dirname},
+        {test: /\.less$/, loaders: ['style-loader', 'css-loader?sourceMap', 'postcss-loader', 'less-loader']},
+        {test: /\.scss$/, loaders: ['style-loader', 'css-loader?sourceMap', 'postcss-loader', 'sass-loader']},
+        {test: /\.(jpg|png|svg)$/, loader: 'url-loader?limit=8192'},
+        {test: /\.(eot|woff|woff2|ttf)([\?]?.*)$/, loader: 'file-loader'}
       ]
     },
 
     plugins: [
-      new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)}),
       new webpack.optimize.UglifyJsPlugin({
         compress: {
